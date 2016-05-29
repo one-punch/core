@@ -1,5 +1,5 @@
  package com.xxshop.core.tools;
- 
+
    import com.sun.image.codec.jpeg.JPEGCodec;
  import com.sun.image.codec.jpeg.JPEGEncodeParam;
  import com.sun.image.codec.jpeg.JPEGImageEncoder;
@@ -53,46 +53,46 @@ import com.xxshop.lucene.LuceneResult;
  import org.springframework.web.multipart.MultipartHttpServletRequest;
  import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
- 
+
  public class CommUtil
  {
    private static final SimpleDateFormat dateFormat = new SimpleDateFormat(
      "yyyy-MM-dd");
- 
+
    private static final Whitelist user_content_filter = Whitelist.relaxed();
    static int totalFolder;
    static int totalFile;
- 
+
    static
    {
-     user_content_filter.addTags(new String[] { "embed", "object", "param", "span", "div", 
+     user_content_filter.addTags(new String[] { "embed", "object", "param", "span", "div",
        "font" });
-     user_content_filter.addAttributes(":all", new String[] { "style", "class", "id", 
+     user_content_filter.addAttributes(":all", new String[] { "style", "class", "id",
        "name" });
-     user_content_filter.addAttributes("object", new String[] { "width", "height", 
+     user_content_filter.addAttributes("object", new String[] { "width", "height",
        "classid", "codebase" });
      user_content_filter.addAttributes("param", new String[] { "name", "value" });
-     user_content_filter.addAttributes("embed", new String[] { "src", "quality", "width", 
-       "height", "allowFullScreen", "allowScriptAccess", "flashvars", 
+     user_content_filter.addAttributes("embed", new String[] { "src", "quality", "width",
+       "height", "allowFullScreen", "allowScriptAccess", "flashvars",
        "name", "type", "pluginspage" });
- 
+
      totalFolder = 0;
      totalFile = 0;
    }
- 
+
    public static String first2low(String str)
    {
      String s = "";
      s = str.substring(0, 1).toLowerCase() + str.substring(1);
      return s;
    }
- 
+
    public static String first2upper(String str) {
      String s = "";
      s = str.substring(0, 1).toUpperCase() + str.substring(1);
      return s;
    }
- 
+
    public static List<String> str2list(String s)
      throws IOException
    {
@@ -107,7 +107,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return list;
    }
- 
+
    public static Date formatDate(String s) {
      Date d = null;
      try {
@@ -116,7 +116,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return d;
    }
- 
+
    public static Date formatDate(String s, String format) {
      Date d = null;
      try {
@@ -126,7 +126,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return d;
    }
- 
+
    public static String formatTime(String format, Object v) {
      if (v == null)
        return null;
@@ -135,21 +135,21 @@ import org.springframework.web.servlet.ModelAndView;
      SimpleDateFormat df = new SimpleDateFormat(format);
      return df.format(v);
    }
- 
+
    public static String formatLongDate(Object v) {
      if ((v == null) || (v.equals("")))
        return "";
      SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
      return df.format(v);
    }
- 
+
    public static String formatShortDate(Object v) {
      if (v == null)
        return null;
      SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
      return df.format(v);
    }
- 
+
    public static String decode(String s) {
      String ret = s;
      try {
@@ -158,7 +158,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return ret;
    }
- 
+
    public static String encode(String s) {
      String ret = s;
      try {
@@ -167,7 +167,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return ret;
    }
- 
+
    public static String convert(String str, String coding) {
      String newStr = "";
      if (str != null)
@@ -178,7 +178,7 @@ import org.springframework.web.servlet.ModelAndView;
        }
      return newStr;
    }
- 
+
    public static Map saveFileToServer(HttpServletRequest request, String filePath, String saveFilePathName, String saveFileName, String[] extendes)
      throws IOException
    {
@@ -213,7 +213,7 @@ import org.springframework.web.servlet.ModelAndView;
          }
          SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
          DataOutputStream out = new DataOutputStream(
-           new FileOutputStream(saveFilePathName + File.separator + 
+           new FileOutputStream(saveFilePathName + File.separator +
            saveFileName));
          InputStream is = null;
          try {
@@ -234,7 +234,7 @@ import org.springframework.web.servlet.ModelAndView;
            }
          }
          if (isImg(extend)) {
-           File img = new File(saveFilePathName + File.separator + 
+           File img = new File(saveFilePathName + File.separator +
              saveFileName);
            try {
              BufferedImage bis = ImageIO.read(img);
@@ -267,7 +267,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return map;
    }
- 
+
    public static boolean isImg(String extend) {
      boolean ret = false;
      List<String> list = new ArrayList();
@@ -283,7 +283,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return ret;
    }
- 
+
    public static final void waterMarkWithImage(String pressImg, String targetImg, int pos, float alpha)
    {
      try
@@ -292,20 +292,20 @@ import org.springframework.web.servlet.ModelAndView;
        Image src = ImageIO.read(_file);
        int width = src.getWidth(null);
        int height = src.getHeight(null);
-       BufferedImage image = new BufferedImage(width, height, 
+       BufferedImage image = new BufferedImage(width, height,
          1);
        Graphics2D g = image.createGraphics();
        g.drawImage(src, 0, 0, width, height, null);
- 
+
        File _filebiao = new File(pressImg);
        Image src_biao = ImageIO.read(_filebiao);
-       g.setComposite(AlphaComposite.getInstance(10, 
+       g.setComposite(AlphaComposite.getInstance(10,
          alpha / 100.0F));
        int width_biao = src_biao.getWidth(null);
        int height_biao = src_biao.getHeight(null);
        int x = 0;
        int y = 0;
- 
+
        if (pos == 2) {
          x = (width - width_biao) / 2;
          y = 0;
@@ -339,7 +339,7 @@ import org.springframework.web.servlet.ModelAndView;
          y = (height - height_biao) / 2;
        }
        g.drawImage(src_biao, x, y, width_biao, height_biao, null);
- 
+
        g.dispose();
        FileOutputStream out = new FileOutputStream(targetImg);
        JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
@@ -349,7 +349,7 @@ import org.springframework.web.servlet.ModelAndView;
        e.printStackTrace();
      }
    }
- 
+
    public static boolean createSmall(String source, String target, int width, int height)
    {
      try
@@ -367,7 +367,7 @@ import org.springframework.web.servlet.ModelAndView;
        e.printStackTrace();
      }return false;
    }
- 
+
    public static boolean createSmall_old(String source, String target, int width)
    {
      try
@@ -386,14 +386,14 @@ import org.springframework.web.servlet.ModelAndView;
        e.printStackTrace();
      }return false;
    }
- 
+
    public static boolean waterMarkWithText(String filePath, String outPath, String text, String markContentColor, Font font, int pos, float qualNum)
    {
      ImageIcon imgIcon = new ImageIcon(filePath);
      Image theImg = imgIcon.getImage();
      int width = theImg.getWidth(null);
      int height = theImg.getHeight(null);
-     BufferedImage bimage = new BufferedImage(width, height, 
+     BufferedImage bimage = new BufferedImage(width, height,
        1);
      Graphics2D g = bimage.createGraphics();
      if (font == null) {
@@ -413,7 +413,7 @@ import org.springframework.web.servlet.ModelAndView;
      int heightInPixels = (int)bounds.getHeight();
      int left = 0;
      int top = heightInPixels;
- 
+
      if (pos == 2) {
        left = width / 2;
        top = heightInPixels;
@@ -460,7 +460,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return true;
    }
- 
+
    public static boolean createFolder(String folderPath) {
      boolean ret = true;
      try {
@@ -477,14 +477,14 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return ret;
    }
- 
+
    public static List toRowChildList(List list, int perNum)
    {
      List l = new ArrayList();
      if (list == null) {
        return l;
      }
- 
+
      for (int i = 0; i < list.size(); i += perNum) {
        List cList = new ArrayList();
        for (int j = 0; j < perNum; j++)
@@ -494,7 +494,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return l;
    }
- 
+
    public static List copyList(List list, int begin, int end) {
      List l = new ArrayList();
      if (list == null)
@@ -506,12 +506,12 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return l;
    }
- 
+
    public static boolean isNotNull(Object obj)
    {
      return (obj != null) && (!obj.toString().equals(""));
    }
- 
+
    public static void copyFile(String oldPath, String newPath)
    {
      try
@@ -523,7 +523,7 @@ import org.springframework.web.servlet.ModelAndView;
          InputStream inStream = new FileInputStream(oldPath);
          FileOutputStream fs = new FileOutputStream(newPath);
          byte[] buffer = new byte[1444];
- 
+
          while ((byteread = inStream.read(buffer)) != -1) {
            bytesum += byteread;
            fs.write(buffer, 0, byteread);
@@ -535,46 +535,46 @@ import org.springframework.web.servlet.ModelAndView;
        e.printStackTrace();
      }
    }
- 
+
    public static boolean deleteFolder(String path)
    {
      boolean flag = false;
      File file = new File(path);
- 
+
      if (!file.exists()) {
        return flag;
      }
- 
+
      if (file.isFile()) {
        return deleteFile(path);
      }
      return deleteDirectory(path);
    }
- 
+
    public static boolean deleteFile(String path)
    {
      boolean flag = false;
      File file = new File(path);
- 
+
      if ((file.isFile()) && (file.exists())) {
        file.delete();
        flag = true;
      }
      return flag;
    }
- 
+
    public static boolean deleteDirectory(String path)
    {
      if (!path.endsWith(File.separator)) {
        path = path + File.separator;
      }
      File dirFile = new File(path);
- 
+
      if ((!dirFile.exists()) || (!dirFile.isDirectory())) {
        return false;
      }
      boolean flag = true;
- 
+
      File[] files = dirFile.listFiles();
      for (int i = 0; i < files.length; i++)
      {
@@ -592,10 +592,10 @@ import org.springframework.web.servlet.ModelAndView;
      if (!flag) {
        return false;
      }
- 
+
      return dirFile.delete();
    }
- 
+
    public static String showPageStaticHtml(String url, int currentPage, int pages)
    {
      String s = "";
@@ -603,7 +603,7 @@ import org.springframework.web.servlet.ModelAndView;
        if (currentPage >= 1) {
          s = s + "<a href='" + url + "_1.htm'>首页</a> ";
          if (currentPage > 1) {
-           s = s + "<a href='" + url + "_" + (currentPage - 1) + 
+           s = s + "<a href='" + url + "_" + (currentPage - 1) +
              ".htm'>上一页</a> ";
          }
        }
@@ -612,19 +612,19 @@ import org.springframework.web.servlet.ModelAndView;
          s = s + "第　";
          int i = beginPage; for (int j = 0; (i <= pages) && (j < 6); j++) {
            if (i == currentPage)
-             s = s + "<a class='this' href='" + url + "_" + i + 
+             s = s + "<a class='this' href='" + url + "_" + i +
                ".htm'>" + i + "</a> ";
            else
-             s = s + "<a href='" + url + "_" + i + ".htm'>" + i + 
+             s = s + "<a href='" + url + "_" + i + ".htm'>" + i +
                "</a> ";
            i++;
          }
- 
+
          s = s + "页　";
        }
        if (currentPage <= pages) {
          if (currentPage < pages) {
-           s = s + "<a href='" + url + "_" + (currentPage + 1) + 
+           s = s + "<a href='" + url + "_" + (currentPage + 1) +
              ".htm'>下一页</a> ";
          }
          s = s + "<a href='" + url + "_" + pages + ".htm'>末页</a> ";
@@ -632,47 +632,44 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return s;
    }
- 
+
    public static String showPageHtml(String url, String params, int currentPage, int pages)
    {
-     String s = "";
+     String s = "<ul class='pagination'>";
      if (pages > 0) {
        if (currentPage >= 1) {
-         s = s + "<a href='" + url + "?currentPage=1" + params + 
-           "'>首页</a> ";
+         s = s + "<li class='paginate_button previous'><a href='" + url + "?currentPage=1" + params +
+           "'>首页</a></li>";
          if (currentPage > 1) {
-           s = s + "<a href='" + url + "?currentPage=" + (
-             currentPage - 1) + params + "'>上一页</a> ";
+           s = s + "<li class='paginate_button previous'><a href='" + url + "?currentPage=" + (
+             currentPage - 1) + params + "'>上一页</a></li>";
          }
        }
        int beginPage = currentPage - 3 < 1 ? 1 : currentPage - 3;
        if (beginPage <= pages) {
-         s = s + "第　";
          int i = beginPage; for (int j = 0; (i <= pages) && (j < 6); j++) {
            if (i == currentPage)
-             s = s + "<a class='this' href='" + url + "?currentPage=" + 
-               i + params + "'>" + i + "</a> ";
+             s = s + "<li class='paginate_button active'><a class='this' href='" + url + "?currentPage=" +
+               i + params + "'>" + i + "</a></li>";
            else
-             s = s + "<a href='" + url + "?currentPage=" + i + params + 
-               "'>" + i + "</a> ";
+             s = s + "<li class='paginate_button'><a href='" + url + "?currentPage=" + i + params +
+               "'>" + i + "</a></li>";
            i++;
          }
- 
-         s = s + "页　";
        }
        if (currentPage <= pages) {
          if (currentPage < pages) {
-           s = s + "<a href='" + url + "?currentPage=" + (
-             currentPage + 1) + params + "'>下一页</a> ";
+           s = s + "<li class='paginate_button next'><a href='" + url + "?currentPage=" + (
+             currentPage + 1) + params + "'>下一页</a></li>";
          }
-         s = s + "<a href='" + url + "?currentPage=" + pages + params + 
-           "'>末页</a> ";
+         s = s + "<li class='paginate_button previous'><a href='" + url + "?currentPage=" + pages + params +
+           "'>末页</a></li>";
        }
      }
- 
-     return s;
+
+     return (s + "</ul>");
    }
- 
+
    public static String showPageFormHtml(int currentPage, int pages)
    {
      String s = "";
@@ -689,15 +686,15 @@ import org.springframework.web.servlet.ModelAndView;
          s = s + "第　";
          int i = beginPage; for (int j = 0; (i <= pages) && (j < 6); j++) {
            if (i == currentPage)
-             s = s + "<a class='this' href='javascript:void(0);' onclick='return gotoPage(" + 
+             s = s + "<a class='this' href='javascript:void(0);' onclick='return gotoPage(" +
                i + ")'>" + i + "</a> ";
            else
-             s = s + "<a href='javascript:void(0);' onclick='return gotoPage(" + 
-               i + 
+             s = s + "<a href='javascript:void(0);' onclick='return gotoPage(" +
+               i +
                ")'>" + i + "</a> ";
            i++;
          }
- 
+
          s = s + "页　";
        }
        if (currentPage <= pages) {
@@ -705,64 +702,64 @@ import org.springframework.web.servlet.ModelAndView;
            s = s + "<a href='javascript:void(0);' onclick='return gotoPage(" + (
              currentPage + 1) + ")'>下一页</a> ";
          }
-         s = s + "<a href='javascript:void(0);' onclick='return gotoPage(" + 
+         s = s + "<a href='javascript:void(0);' onclick='return gotoPage(" +
            pages + ")'>末页</a> ";
        }
      }
- 
+
      return s;
    }
- 
+
    public static String showPageAjaxHtml(String url, String params, int currentPage, int pages)
    {
      String s = "";
      if (pages > 0) {
        String address = url + "?1=1" + params;
        if (currentPage >= 1) {
-         s = s + "<a href='javascript:void(0);' onclick='return ajaxPage(\"" + 
+         s = s + "<a href='javascript:void(0);' onclick='return ajaxPage(\"" +
            address + "\",1,this)'>首页</a> ";
-         s = s + "<a href='javascript:void(0);' onclick='return ajaxPage(\"" + 
-           address + 
+         s = s + "<a href='javascript:void(0);' onclick='return ajaxPage(\"" +
+           address +
            "\"," + (
-           currentPage - 1) + 
+           currentPage - 1) +
            ",this)'>上一页</a> ";
        }
- 
+
        int beginPage = currentPage - 3 < 1 ? 1 : currentPage - 3;
        if (beginPage <= pages) {
          s = s + "第　";
          int i = beginPage; for (int j = 0; (i <= pages) && (j < 6); j++) {
            if (i == currentPage)
-             s = s + "<a class='this' href='javascript:void(0);' onclick='return ajaxPage(\"" + 
-               address + 
-               "\"," + 
-               i + 
-               ",this)'>" + 
-               i + 
+             s = s + "<a class='this' href='javascript:void(0);' onclick='return ajaxPage(\"" +
+               address +
+               "\"," +
+               i +
+               ",this)'>" +
+               i +
                "</a> ";
            else
-             s = s + "<a href='javascript:void(0);' onclick='return ajaxPage(\"" + 
-               address + "\"," + i + 
+             s = s + "<a href='javascript:void(0);' onclick='return ajaxPage(\"" +
+               address + "\"," + i +
                ",this)'>" + i + "</a> ";
            i++;
          }
- 
+
          s = s + "页　";
        }
        if (currentPage <= pages) {
-         s = s + "<a href='javascript:void(0);' onclick='return ajaxPage(\"" + 
-           address + 
+         s = s + "<a href='javascript:void(0);' onclick='return ajaxPage(\"" +
+           address +
            "\"," + (
-           currentPage + 1) + 
+           currentPage + 1) +
            ",this)'>下一页</a> ";
-         s = s + "<a href='javascript:void(0);' onclick='return ajaxPage(\"" + 
+         s = s + "<a href='javascript:void(0);' onclick='return ajaxPage(\"" +
            address + "\"," + pages + ",this)'>末页</a> ";
        }
      }
- 
+
      return s;
    }
- 
+
    public static void saveIPageList2ModelAndView(String url, String staticURL, String params, IPageList pList, ModelAndView mv)
    {
      if (pList != null) {
@@ -771,23 +768,23 @@ import org.springframework.web.servlet.ModelAndView;
        mv.addObject("pageSize", Integer.valueOf(pList.getPageSize()));
        mv.addObject("rows", new Integer(pList.getRowCount()));
        mv.addObject("currentPage", new Integer(pList.getCurrentPage()));
-       mv.addObject("gotoPageHTML", showPageHtml(url, params, 
+       mv.addObject("gotoPageHTML", showPageHtml(url, params,
          pList.getCurrentPage(), pList.getPages()));
        mv.addObject(
-         "gotoPageFormHTML", 
-         showPageFormHtml(pList.getCurrentPage(), 
+         "gotoPageFormHTML",
+         showPageFormHtml(pList.getCurrentPage(),
          pList.getPages()));
        mv.addObject(
-         "gotoPageStaticHTML", 
-         showPageStaticHtml(staticURL, 
+         "gotoPageStaticHTML",
+         showPageStaticHtml(staticURL,
          pList.getCurrentPage(), pList.getPages()));
        mv.addObject(
-         "gotoPageAjaxHTML", 
-         showPageAjaxHtml(url, params, 
+         "gotoPageAjaxHTML",
+         showPageAjaxHtml(url, params,
          pList.getCurrentPage(), pList.getPages()));
      }
    }
- 
+
    public static void saveLucene2ModelAndView(String type, LuceneResult pList, ModelAndView mv)
    {
      if (pList != null) {
@@ -802,17 +799,17 @@ import org.springframework.web.servlet.ModelAndView;
        mv.addObject("rows", Integer.valueOf(pList.getRows()));
        mv.addObject("currentPage", new Integer(pList.getCurrentPage()));
        mv.addObject(
-         "gotoPageFormHTML", 
-         showPageFormHtml(pList.getCurrentPage(), 
+         "gotoPageFormHTML",
+         showPageFormHtml(pList.getCurrentPage(),
          pList.getPages()));
      }
    }
- 
+
    public static char randomChar() {
-     char[] chars = { 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 
-       'e', 'E', 'f', 'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J', 
-       'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N', 'o', 'O', 'p', 'P', 
-       'q', 'Q', 'r', 'R', 's', 'S', 't', 'T', 'u', 'U', 'v', 'V', 
+     char[] chars = { 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D',
+       'e', 'E', 'f', 'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J',
+       'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N', 'o', 'O', 'p', 'P',
+       'q', 'Q', 'r', 'R', 's', 'S', 't', 'T', 'u', 'U', 'v', 'V',
        'w', 'W', 'x', 'X', 'y', 'Y', 'z', 'Z' };
      int index = (int)(Math.random() * 52.0D) - 1;
      if (index < 0) {
@@ -820,19 +817,19 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return chars[index];
    }
- 
+
    public static String[] splitByChar(String s, String c) {
      String[] list = s.split(c);
      return list;
    }
- 
+
    public static Object requestByParam(HttpServletRequest request, String param) {
      if (!request.getParameter(param).equals("")) {
        return request.getParameter(param);
      }
      return null;
    }
- 
+
    public static String substring(String s, int maxLength)
    {
      if (!StringUtils.hasLength(s))
@@ -842,13 +839,13 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return s.substring(0, maxLength) + "...";
    }
- 
+
    public static String substringfrom(String s, String from) {
      if (s.indexOf(from) < 0)
        return "";
      return s.substring(s.indexOf(from) + from.length());
    }
- 
+
    public static int null2Int(Object s) {
      int v = 0;
      if (s != null)
@@ -858,7 +855,7 @@ import org.springframework.web.servlet.ModelAndView;
        }
      return v;
    }
- 
+
    public static float null2Float(Object s) {
      float v = 0.0F;
      if (s != null)
@@ -868,7 +865,7 @@ import org.springframework.web.servlet.ModelAndView;
        }
      return v;
    }
- 
+
    public static double null2Double(Object s) {
      double v = 0.0D;
      if (s != null)
@@ -878,7 +875,7 @@ import org.springframework.web.servlet.ModelAndView;
        }
      return v;
    }
- 
+
    public static boolean null2Boolean(Object s) {
      boolean v = false;
      if (s != null)
@@ -888,11 +885,11 @@ import org.springframework.web.servlet.ModelAndView;
        }
      return v;
    }
- 
+
    public static String null2String(Object s) {
      return s == null ? "" : s.toString().trim();
    }
- 
+
    public static Long null2Long(Object s) {
      Long v = Long.valueOf(-1L);
      if (s != null)
@@ -902,7 +899,7 @@ import org.springframework.web.servlet.ModelAndView;
        }
      return v;
    }
- 
+
    public static String getTimeInfo(long time) {
      int hour = (int)time / 3600000;
      long balance = time - hour * 1000 * 60 * 60;
@@ -920,7 +917,7 @@ import org.springframework.web.servlet.ModelAndView;
        ret = ret + seconds + "秒";
      return ret;
    }
- 
+
    public static String getIpAddr(HttpServletRequest request) {
      String ip = request.getHeader("x-forwarded-for");
      if ((ip == null) || (ip.length() == 0) || ("unknown".equalsIgnoreCase(ip))) {
@@ -934,11 +931,11 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return ip;
    }
- 
+
    public static int indexOf(String s, String sub) {
      return s.trim().indexOf(sub.trim());
    }
- 
+
    public static Map cal_time_space(Date begin, Date end) {
      SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
      long l = end.getTime() - begin.getTime();
@@ -953,7 +950,7 @@ import org.springframework.web.servlet.ModelAndView;
      map.put("second", Long.valueOf(second));
      return map;
    }
- 
+
    public static final String randomString(int length) {
      char[] numbersAndLetters = "0123456789abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
        .toCharArray();
@@ -967,21 +964,21 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return new String(randBuffer);
    }
- 
+
    public static final String randomInt(int length) {
      if (length < 1) {
        return null;
      }
      Random randGen = new Random();
      char[] numbersAndLetters = "0123456789".toCharArray();
- 
+
      char[] randBuffer = new char[length];
      for (int i = 0; i < randBuffer.length; i++) {
        randBuffer[i] = numbersAndLetters[randGen.nextInt(10)];
      }
      return new String(randBuffer);
    }
- 
+
    public static long getDateDistance(String time1, String time2)
    {
      long quot = 0L;
@@ -996,7 +993,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return quot;
    }
- 
+
    public static double div(Object a, Object b)
    {
      double ret = 0.0D;
@@ -1009,7 +1006,7 @@ import org.springframework.web.servlet.ModelAndView;
      DecimalFormat df = new DecimalFormat("0.00");
      return Double.valueOf(df.format(ret)).doubleValue();
    }
- 
+
    public static double subtract(Object a, Object b)
    {
      double ret = 0.0D;
@@ -1019,7 +1016,7 @@ import org.springframework.web.servlet.ModelAndView;
      DecimalFormat df = new DecimalFormat("0.00");
      return Double.valueOf(df.format(ret)).doubleValue();
    }
- 
+
    public static double add(Object a, Object b)
    {
      double ret = 0.0D;
@@ -1029,7 +1026,7 @@ import org.springframework.web.servlet.ModelAndView;
      DecimalFormat df = new DecimalFormat("0.00");
      return Double.valueOf(df.format(ret)).doubleValue();
    }
- 
+
    public static double mul(Object a, Object b)
    {
      BigDecimal e = new BigDecimal(null2Double(a));
@@ -1038,23 +1035,23 @@ import org.springframework.web.servlet.ModelAndView;
      DecimalFormat df = new DecimalFormat("0.00");
      return Double.valueOf(df.format(ret)).doubleValue();
    }
- 
+
    public static double formatMoney(Object money) {
      DecimalFormat df = new DecimalFormat("0.00");
      return Double.valueOf(df.format(money)).doubleValue();
    }
- 
+
    public static int M2byte(float m) {
      float a = m * 1024.0F * 1024.0F;
      return (int)a;
    }
- 
+
    public static boolean convertIntToBoolean(int intValue) {
      return intValue != 0;
    }
- 
+
    public static String getURL(HttpServletRequest request) {
-     String contextPath = request.getContextPath().equals("/") ? "" : 
+     String contextPath = request.getContextPath().equals("/") ? "" :
        request.getContextPath();
      String url = "http://" + request.getServerName();
      if (null2Int(Integer.valueOf(request.getServerPort())) != 80)
@@ -1064,14 +1061,14 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return url;
    }
- 
+
    public static String filterHTML(String content)
    {
      Whitelist whiteList = new Whitelist();
      String s = Jsoup.clean(content, user_content_filter);
      return s;
    }
- 
+
    public static int parseDate(String type, Date date) {
      Calendar cal = Calendar.getInstance();
      cal.setTime(date);
@@ -1095,19 +1092,19 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return 0;
    }
- 
+
    public static int[] readImgWH(String imgurl)
    {
      boolean b = false;
      try
      {
        URL url = new URL(imgurl);
- 
+
        BufferedInputStream bis = new BufferedInputStream(
          url.openStream());
- 
+
        byte[] bytes = new byte[100];
- 
+
        OutputStream bos = new FileOutputStream(
          new File("C:\\thetempimg.gif"));
        int len;
@@ -1118,7 +1115,7 @@ import org.springframework.web.servlet.ModelAndView;
        bis.close();
        bos.flush();
        bos.close();
- 
+
        b = true;
      }
      catch (Exception e) {
@@ -1149,35 +1146,35 @@ import org.springframework.web.servlet.ModelAndView;
        } else {
          a = null;
        }
- 
+
        file.delete();
      } else {
        a = null;
      }
      return a;
    }
- 
+
    public static boolean del_acc(HttpServletRequest request, Accessory acc)
    {
      boolean ret = true;
      boolean ret1 = true;
      if (acc != null) {
-       String path = request.getRealPath("/") + acc.getPath() + 
+       String path = request.getRealPath("/") + acc.getPath() +
          File.separator + acc.getName();
-       String small_path = request.getRealPath("/") + acc.getPath() + 
+       String small_path = request.getRealPath("/") + acc.getPath() +
          File.separator + acc.getName() + "_small." + acc.getExt();
        ret = deleteFile(path);
        ret1 = deleteFile(small_path);
      }
      return (ret) && (ret1);
    }
- 
+
    public static boolean fileExist(String path)
    {
      File file = new File(path);
      return file.exists();
    }
- 
+
    public static int splitLength(String s, String c)
    {
      int v = 0;
@@ -1186,11 +1183,13 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return v;
    }
- 
+
    public static double fileSize(File folder)
    {
      totalFolder += 1;
- 
+     if(!folder.exists()){
+    	 return div(Long.valueOf(0), Integer.valueOf(1024));
+     }
      long foldersize = 0L;
      File[] filelist = folder.listFiles();
      for (int i = 0; i < filelist.length; i++) {
@@ -1203,7 +1202,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return div(Long.valueOf(foldersize), Integer.valueOf(1024));
    }
- 
+
    public static int fileCount(File file)
    {
      if (file == null) {
@@ -1224,17 +1223,17 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return fileCount;
    }
- 
+
    public static String get_all_url(HttpServletRequest request)
    {
      String query_url = request.getRequestURI();
-     if ((request.getQueryString() != null) && 
+     if ((request.getQueryString() != null) &&
        (!request.getQueryString().equals(""))) {
        query_url = query_url + "?" + request.getQueryString();
      }
      return query_url;
    }
- 
+
    public static Color getColor(String color)
    {
      if (color.charAt(0) == '#') {
@@ -1251,7 +1250,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return null;
    }
- 
+
    public static Set<Integer> randomInt(int a, int length)
    {
      Set list = new TreeSet();
@@ -1266,7 +1265,7 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return list;
    }
- 
+
    public static Double formatDouble(Object obj, int len)
    {
      Double ret = Double.valueOf(0.0D);
@@ -1277,19 +1276,19 @@ import org.springframework.web.servlet.ModelAndView;
      DecimalFormat df = new DecimalFormat(format);
      return Double.valueOf(df.format(obj));
    }
- 
+
    public static boolean isChinese(char c)
    {
      Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
- 
-     return (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS) || 
-       (ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS) || 
-       (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A) || 
-       (ub == Character.UnicodeBlock.GENERAL_PUNCTUATION) || 
-       (ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION) || 
+
+     return (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS) ||
+       (ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS) ||
+       (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A) ||
+       (ub == Character.UnicodeBlock.GENERAL_PUNCTUATION) ||
+       (ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION) ||
        (ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS);
    }
- 
+
    public static boolean isMessyCode(String strName)
    {
      Pattern p = Pattern.compile("\\s*|\t*|\r*|\n*");
@@ -1308,12 +1307,12 @@ import org.springframework.web.servlet.ModelAndView;
          System.out.print(c);
        }
      }
- 
+
      float result = count / chLength;
- 
+
      return result > 0.4D;
    }
- 
+
    public static String trimSpaces(String IP)
    {
      while (IP.startsWith(" ")) {
@@ -1324,22 +1323,22 @@ import org.springframework.web.servlet.ModelAndView;
      }
      return IP;
    }
- 
+
    public static boolean isIp(String IP)
    {
      boolean b = false;
      IP = trimSpaces(IP);
      if (IP.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}")) {
        String[] s = IP.split("\\.");
-       if ((Integer.parseInt(s[0]) < 255) && 
-         (Integer.parseInt(s[1]) < 255) && 
-         (Integer.parseInt(s[2]) < 255) && 
+       if ((Integer.parseInt(s[0]) < 255) &&
+         (Integer.parseInt(s[1]) < 255) &&
+         (Integer.parseInt(s[2]) < 255) &&
          (Integer.parseInt(s[3]) < 255))
          b = true;
      }
      return b;
    }
- 
+
    public static String generic_domain(HttpServletRequest request)
    {
      String system_domain = "localhost";
@@ -1349,7 +1348,7 @@ import org.springframework.web.servlet.ModelAndView;
      else {
        system_domain = serverName.substring(serverName.indexOf(".") + 1);
      }
- 
+
      return system_domain;
    }
  }
